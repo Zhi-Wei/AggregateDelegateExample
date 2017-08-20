@@ -1,6 +1,7 @@
 ﻿using AggregateDelegateExample.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace AggregateDelegateExample
 {
@@ -36,6 +37,38 @@ namespace AggregateDelegateExample
                 ),
 
                 new KeyValuePair<Func<FilterType, bool>, Func<int, bool>>
+                (
+                    filter => (filter & FilterType.LessThanTen) == FilterType.LessThanTen,
+                    number => number < 10
+                )
+            };
+
+        /// <summary>
+        /// 運算式樹狀架構篩選條件。
+        /// </summary>
+        private static IEnumerable<KeyValuePair<Func<FilterType, bool>, Expression<Func<int, bool>>>>
+            _expressionConditions =
+            new List<KeyValuePair<Func<FilterType, bool>, Expression<Func<int, bool>>>>(4)
+            {
+                new KeyValuePair<Func<FilterType, bool>, Expression<Func<int, bool>>>
+                (
+                    filter => (filter & FilterType.Odd) == FilterType.Odd,
+                    number => number % 2 != 0
+                ),
+
+                new KeyValuePair<Func<FilterType, bool>, Expression<Func<int, bool>>>
+                (
+                    filter => (filter & FilterType.Even) == FilterType.Even,
+                    number => number % 2 == 0
+                ),
+
+                new KeyValuePair<Func<FilterType, bool>, Expression<Func<int, bool>>>
+                (
+                    filter => (filter & FilterType.GreaterThanTen) == FilterType.GreaterThanTen,
+                    number => number > 10
+                ),
+
+                new KeyValuePair<Func<FilterType, bool>, Expression<Func<int, bool>>>
                 (
                     filter => (filter & FilterType.LessThanTen) == FilterType.LessThanTen,
                     number => number < 10

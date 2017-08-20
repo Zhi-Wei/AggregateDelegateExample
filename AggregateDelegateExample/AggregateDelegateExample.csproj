@@ -46,6 +46,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ExampleServiceByCollection.cs" />
+    <Compile Include="Services\ExampleServiceByDelegate.cs" />
     <Compile Include="Services\Interfaces\IAggregateDelegateExampleService.cs" />
   </ItemGroup>
   <ItemGroup>

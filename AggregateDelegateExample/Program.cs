@@ -1,5 +1,6 @@
 ﻿using AggregateDelegateExample.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -74,5 +75,22 @@ namespace AggregateDelegateExample
                     number => number < 10
                 )
             };
+
+        /// <summary>
+        /// 輸出至畫面。
+        /// </summary>
+        /// <param name="collection">可列舉的集合。</param>
+        private static void PrintOut(IEnumerable collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            foreach (var item in collection)
+            {
+                Console.WriteLine(item?.ToString());
+            }
+        }
     }
 }

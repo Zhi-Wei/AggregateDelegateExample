@@ -388,5 +388,297 @@ namespace AggregateDelegateExample.Services.Tests
         }
 
         #endregion -- GetFilterDelegatePredicate --
+
+        #region -- GetFilterExpressionPredicate --
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為0時_應無篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.None;
+            var expected = this._sourceData;
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為1時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd;
+            var expected = this._sourceData.Where(x => x % 2 != 0);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為2時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Even;
+            var expected = this._sourceData.Where(x => x % 2 == 0);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為3時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.Even;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為4時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.GreaterThanTen;
+            var expected = this._sourceData.Where(x => x > 10);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為5時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.GreaterThanTen;
+            var expected = this._sourceData.Where(x => x % 2 != 0 && x > 10);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為6時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Even | FilterType.GreaterThanTen;
+            var expected = this._sourceData.Where(x => x % 2 == 0 && x > 10);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為7時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.Even | FilterType.GreaterThanTen;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為8時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.LessThanTen;
+            var expected = this._sourceData.Where(x => x < 10);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為9時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.LessThanTen;
+            var expected = this._sourceData.Where(x => x % 2 != 0 && x < 10);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為10時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Even | FilterType.LessThanTen;
+            var expected = this._sourceData.Where(x => x % 2 == 0 && x < 10);
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為11時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.Even | FilterType.LessThanTen;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為12時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.GreaterThanTen | FilterType.LessThanTen;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為13時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.GreaterThanTen | FilterType.LessThanTen;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為14時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Even | FilterType.GreaterThanTen | FilterType.LessThanTen;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [TestMethod()]
+        [TestCategory(nameof(ExampleServiceByCollection))]
+        [TestProperty(nameof(ExampleServiceByCollection), "GetFilterExpressionPredicate")]
+        public void GetFilterExpressionPredicate_當傳入參數filterType為15時_應篩選sourceData()
+        {
+            // Arrange
+            var filterType = FilterType.Odd | FilterType.Even | FilterType.GreaterThanTen | FilterType.LessThanTen;
+            var expected = new int[] { };
+            var sut = this.GetSystemUnderTestInstance();
+
+            // Act
+            var predicate = sut.GetFilterExpressionPredicate(_expressionConditions, filterType);
+            var actual = this._sourceData.Where(predicate.Compile());
+
+            // Assert
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        #endregion -- GetFilterExpressionPredicate --
     }
 }
